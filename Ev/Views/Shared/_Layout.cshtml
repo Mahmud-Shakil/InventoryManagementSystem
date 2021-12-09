@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/dist/css/menu-style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+
+
+</head>
+<body>
+    @*<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            @Html.ActionLink("Techy", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+
+                            <li class="nav-item">
+                                @Html.ActionLink("Customer Management", "Index", "Customer", new { area = "" }, new { @class = "navbar-brand" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Category", "CreateCategories", "Catrgories", new { area = "" }, new { @class = "navbar-brand" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Product", "CreateProduct", "Product", new { area = "" }, new { @class = "navbar-brand" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Supplier", "CreateSupplier", "Supplier", new { area = "" }, new { @class = "navbar-brand" })
+                            </li>
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li>@Html.ActionLink("Roles", "Index", "TbleRoles", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                <li>@Html.ActionLink("Assign Roles", "Index", "UserWiseRoles", new { area = "" }, new { @class = "navbar-brand" })</li>
+                            }
+                            <li>@Html.ActionLink("Log Out", "Logout", "Account", new { area = "" }, new { @class = "navbar-brand" })</li>
+                            <li><a href="#" class="navbar-brand">Welcome @User.Identity.Name</a></li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Sign Up", "SignUp", "Account", new { area = "" }, new { @class = "navbar-brand" })</li>
+                            <li>@Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        }
+                        }
+
+                    </ul>
+
+
+                </div>
+            </div>
+        </nav>*@
+    <div class="wrapper">
+
+        <!--sidebar start-->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+                @*<Center class="profile">
+                    <img src="dist/img/Te.png" alt=""><p></p>
+                </Center>*@
+                <ul>
+                    <li class="item">
+
+                        <a href="@Url.Action("Index", "Home")" class="menu-btn"><i class="fas fa-laptop-house"></i><span>Techy</span></a>
+
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="item">
+                            <a href="@Url.Action("Index", "Customer")" class="menu-btn"><i class="fas fa-object-ungroup"></i><span>Customer Management</span></a>
+
+                        </li>
+                        <li class="item">
+                            <a href="@Url.Action("CreateCategories", "Catrgories")" class="menu-btn"><i class="fas fa-database"></i><span>Category</span></a>
+
+                        </li>
+                        <li class="item">
+                            <a href="@Url.Action("CreateProduct", "Product")" class="menu-btn"><i class="fas fa-server"></i><span>Product</span></a>
+
+
+                        </li>
+                        <li class="item">
+                            <a href="@Url.Action("CreateSupplier", "Supplier")" class="menu-btn"><i class="fab fa-phoenix-framework"></i><span>Supplier</span></a>
+
+                        </li>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li class="item">
+                                <a href="@Url.Action("Index", "TbleRoles")" class="menu-btn"><i class="fas fa-user-tag"></i><span>Roles</span></a>
+
+                            </li>
+                            <li class="item">
+                                <a href="@Url.Action("Index", "UserWiseRoles")" class="menu-btn"><i class="fab fa-atlassian"></i><span>Assign Roles</span></a>
+
+                            </li>
+                        }
+
+                    }
+                </ul>
+            </div>
+        </div>
+        <!--sidebar end-->
+        <!--header menu start-->
+        <div class="header">
+            <div class="header-menu">
+                <div class="title"><span class="title-hide"><span class="sec-span">Techy</span></span></div>
+                <div class="sidebar-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                    <a href="#" class="userName">Welcome @User.Identity.Name</a>
+
+                    <li class="item">
+                        <a href="@Url.Action("Logout", "Account")"><i class="fas fa-power-off"></i></a>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+      
+        <!--header menu end-->
+        <!--main container start-->
+        <div class="main-container">
+            <div class="content">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+
+    @*<hr />*@
+    @*<footer class="text-center">
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>*@
+
+
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="~/dist/js/menu.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/Custom.js"></script>
+
+
+</body>
+</html>
+
+

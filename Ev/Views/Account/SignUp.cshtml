@@ -1,0 +1,41 @@
+﻿@model Ev.Models.TblUser
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout -LoginAndSignUp.cshtml";
+}
+<section>
+    <div class="form-container">
+        <h1>Sign Up</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="control">
+                    @Html.LabelFor(model => model.UserName)
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @id = "name" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+
+            <div class="control">
+                @Html.LabelFor(model => model.Password)
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "psw", @type = "password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+
+            </div>
+            
+            <div class="control">
+                <input type="submit" value="Sign Up" class="btn btn-warning" />
+
+            </div>
+
+        }
+        <div>
+            @Html.ActionLink("Login", "Login", "Account")
+        </div>
+    </div>
+</section>

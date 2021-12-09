@@ -1,0 +1,29 @@
+﻿@model Ev.Models.TbleRole
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="col-md-5 mx-auto">
+    <h4>TbleRole</h4>
+    <h2>Details</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+    </dl>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id },new { @class="btn btn-primary"}) 
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+

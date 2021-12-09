@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Ev.Models.CustomerCategory>
+
+<div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Category Id</th>
+            <th>Category Type</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryType</td>
+            </tr>
+        }
+    </table>
+</div>

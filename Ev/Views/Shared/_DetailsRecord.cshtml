@@ -1,0 +1,61 @@
+﻿@model Ev.Models.ViewModel.CustomerViewModel
+<div class="col-md-12 mx-auto">
+    <h2>Details View</h2>
+    @Html.HiddenFor(model => model.CustomerId)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+
+    <div class="form-group mb-3 position-relative">
+        @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control datetimepicker", @disabled = "disabled" } })
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.CategoryType, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.CategoryId, new SelectList(ViewBag.Categories, "CategoryId", "CategoryType"), "Select Category", new { @class = "form-select ", @disabled = "disabled" })
+
+    </div>
+    <div class="from-group mb-3">
+        @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.Products, "ProductId", "ProductName"), "Select Product", new { @class = "form-select", @id = "dropDownProduct", @disabled = "disabled" })
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.Suppliers, "SupplierId", "SupplierName"), "Select a Supplier", new { @class = "form-select", @id = "dropDownSupplier", @disabled = "disabled" })
+    </div>
+    <div class="form-group mb-3 ">
+        @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "form-label mb-3" })<br />
+        <img src="@Url.Content(Model.ImageUrl)" alt="@Model.ImageName" height="80" width="80" class="changeEdit" />
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+</div>

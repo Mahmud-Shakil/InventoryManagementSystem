@@ -1,0 +1,215 @@
+﻿@model PagedList.IPagedList<Ev.Models.ViewModel.CustomerViewModel>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+    <div class="m-5">
+        <div class="row">
+
+            <h2>Index</h2>
+            <div class="col-md-6">
+                <div class="btnCreate">
+                    <a href="#" class="btn btn-warning" name="details"
+                       data-bs-toggle="modal" data-bs-target="#customerCreate">Create New</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("ExportReport")" class="btn btn-secondary">Print Report</a>
+
+                </div>
+               
+            </div>
+            <div class="col-md-6">
+                <div class="btnSearch">
+                    @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+                    {
+                        <p>
+                            Search By : @Html.TextBox("SearchString")
+                            <input type="submit" value="Search" class="btn btn-info" />
+                        </p>
+
+                    }
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Customer ID</th>
+                    <th>@Html.ActionLink("Customer Name", "Index", new { SortOrder = ViewBag.SortNameParam })</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Order Date</th>
+                    <th>Image</th>
+                    <th>Category Type</th>
+                    <th>Product</th>
+                    <th>Supplier</th>
+                    <th>Operations</th>
+
+                </tr>
+                @foreach (var item in Model)
+                {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.CustomerId)</td>
+                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.MobileNo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>
+                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.OrderDate))
+                </td>
+                <td>
+                    <img src="@Url.Content(item.ImageUrl)" alt="@item.ImageName" width="60" height="60" />
+                </td>
+
+                <td>@Html.DisplayFor(modelItem => item.CategoryType)</td>
+                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                <td>@Html.DisplayFor(modelItem => item.SupplierName)</td>
+                <td>
+
+                    <a href="#" class="btn btn-warning" name="details"
+                       onclick='EditRecord("+@item.CustomerId+")' data-bs-toggle="modal" data-bs-target="#EditModal">Edit</a>
+                    <a href="#" class="btn btn-danger" name="details"
+                       onclick='DeleteRecord("+@item.CustomerId+")' data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                    <a href="#" class="btn btn-primary" name="details"
+                       onclick='DetailsRecord("+@item.CustomerId+")' data-bs-toggle="modal" data-bs-target="#customerDetails">Details</a>
+                </td>
+            </tr>
+                }
+            </table>
+            Page@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOrder = ViewBag.CurrrentSort, CurrentFilter = ViewBag.CurrentFilter }))
+            <div class="modal fade" id="customerCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @{Html.RenderAction("Create"); }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="customerDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="DetailspartialDiv">
+                                @if (ViewBag.Details == "Show")
+                                {
+                                    @Html.Partial("_DetailsRecord", Model);
+                                    ViewBag.Details = "";
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function DetailsRecord(customerId) {
+        $.ajax({
+            url: "/Customer/Details?id=" + customerId,
+            type: "GET",
+            data: "",
+            contentType: 'application/json;charset=utf-8',
+            success: function (data) {
+                $('#DetailspartialDiv').show();
+                $('#DetailspartialDiv').html(data);
+
+            },
+            error: function () {
+                alert("Error Occured")
+            }
+        });
+    }
+</script>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="DeletepartialDiv">
+                    @if (ViewBag.Delete == "CustomerDelete")
+                    {
+                        @Html.Partial("_DeletePartial", Model);
+                        ViewBag.Delete = "";
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function DeleteRecord(customerId) {
+        $.ajax({
+            url: "/Customer/Delete?id=" + customerId,
+            type: "GET",
+            data: "",
+            contentType: 'application/json;charset=utf-8',
+            success: function (data) {
+                $('#DeletepartialDiv').show();
+                $('#DeletepartialDiv').html(data);
+
+            },
+            error: function () {
+                alert("Error Occured")
+            }
+        });
+    }
+</script>
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="EditpartialDiv">
+                    @if (ViewBag.Edit == "CustomerEdit")
+                    {
+                        @Html.Partial("_DeletePartial", Model);
+                        ViewBag.Edit = "";
+                    }
+                    
+                </div>
+
+               
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function EditRecord(customerId) {
+        $.ajax({
+            url: "/Customer/Edit?id=" + customerId,
+            type: "GET",
+            data: "",
+            contentType: 'application/json;charset=utf-8',
+            success: function (data) {
+                $('#EditpartialDiv').show();
+                $('#EditpartialDiv').html(data);
+
+            },
+            error: function () {
+                alert("Error Occured")
+            }
+        });
+    }
+</script>
+

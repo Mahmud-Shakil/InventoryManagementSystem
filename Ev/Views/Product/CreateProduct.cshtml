@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Ev.Models.Product>
+@{
+    ViewBag.Title = "CreateProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div class="container-fluid">
+    <div class="col-md-5 mx-auto my-5">
+        <div id="divAjax1">
+            @using (Ajax.BeginForm("Product", "Product", new AjaxOptions
+            {
+                UpdateTargetId = "divAjax",
+                HttpMethod = "POST",
+                Confirm = "Are you sure to Save this Data?",
+                LoadingElementId = "LoadingImage",
+                LoadingElementDuration = 2000,
+                OnComplete = "Clear",
+            }))
+            {
+                @Html.AntiForgeryToken()
+
+                <h2 class="text-center">Create Categories</h2>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group mb-3">
+            @Html.Label("Product Name", new { @class = "form-label" })
+            @Html.TextBox("ProductName", null, new { @class = "form-control" })
+            @Html.DropDownList("SupplierId", new SelectList(ViewBag.Suppliers, "SupplierId", "SupplierName"), "Select Supplier", new { @class = "form-select " })
+
+        </div>
+                <div class="form-group mb-3">
+                    <input type="submit" value="Save" class="btn btn-lg btn-info" />
+                </div>
+                <div class="col-md-12" id="LoadingImage" style="display:none;">
+                    <img src="~/App_Images/giffy.gif" width="200" height="200" />
+                </div>
+
+            }
+        </div>
+        <div id="divAjax">
+            @{Html.RenderPartial("_ProductListView", Model);}
+        </div>
+
+
+    </div>
+</div>
+<script>
+    function Clear() {
+        $(this).closest('form').find("input[type=text], textarea").val("");
+    }
+</script>

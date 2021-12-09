@@ -1,0 +1,42 @@
+﻿@model Ev.Models.TblUser
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout -LoginAndSignUp.cshtml";
+}
+
+
+
+<section>
+    <div class="form-container">
+        <h1>Login</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="control">
+                    @Html.LabelFor(model => model.UserName)
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @id = "name" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="control">
+                @Html.LabelFor(model => model.Password)
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "psw", @type = "password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+
+            </div>
+            <span><input type="checkbox"> Remember me</span>
+            <div class="control">
+                <input type="submit" value="Login" class="btn btn-outline-success" />
+
+            </div>
+
+        }
+        <div class="form-group mb-3">
+            @Html.ActionLink("Sign Up", "SignUp", "Account")
+        </div>
+        <p><a href="#">Forget password ?</a></p>
+    </div>
+</section>

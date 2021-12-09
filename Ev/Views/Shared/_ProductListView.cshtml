@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Ev.Models.Product>
+
+<div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Supplier Name</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.Supplier.SupplierName</td>
+            </tr>
+        }
+    </table>
+</div>
